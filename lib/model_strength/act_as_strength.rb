@@ -6,8 +6,12 @@ module ModelStrength
     end
 
     module ClassMethods
-      def acts_as_strengthable(*attributes)
-        # TODO
+      def acts_as_strength(*attributes)
+        nb_attributes = attributes.size
+        step = (100/nb_attributes)
+        attributes.inject(0) do |total, attribute|
+          total += step unless read_attribute(attribute).blank?
+        end
       end
     end
   end
