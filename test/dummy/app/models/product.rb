@@ -1,3 +1,3 @@
 class Product < ActiveRecord::Base
-  acts_as_strength :text, :description
+  acts_as_strength :name, :description
 end
