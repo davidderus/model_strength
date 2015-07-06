@@ -1,4 +1,4 @@
-require 'model_strength/act_as_strength'
+require 'model_strength/acts_as_strength'
 
 module ModelStrength
 end

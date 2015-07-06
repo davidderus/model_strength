@@ -1,5 +1,5 @@
 module ModelStrength
-  class ActAsStrength
+  class ActsAsStrength
     extend ActiveSupport::Concern
 
     included do
