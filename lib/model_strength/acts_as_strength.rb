@@ -25,7 +25,7 @@ module ModelStrength
 
       def compute_score
         value = self.class.strength_attributes.inject(0) do |total, attribute|
-          read_attribute(attribute).blank? ? total : (total + self.class.strength_step)
+          read_attribute(attribute).present? ? (total + self.class.strength_step) : total
         end
 
         write_attribute(:score, value)
