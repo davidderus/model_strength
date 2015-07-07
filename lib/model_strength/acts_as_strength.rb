@@ -43,6 +43,10 @@ module ModelStrength
         self.class.strength_statuses.select{ |score, value| score === self.score }.values.last
       end
 
+      def score?
+        self.score.present?
+      end
+
       protected
 
       def default_exclude
