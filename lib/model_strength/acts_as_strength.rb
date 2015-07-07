@@ -41,17 +41,7 @@ module ModelStrength
     end
 
     module LocalInstanceMethods
-
       def current_score
-        if self.class.strength_exclude
-          attributes = self.attributes.except(*(self.class.strength_attributes | default_exclude)).keys
-        else
-          attributes = self.class.strength_attributes
-        end
-
-        nb_attributes = attributes.size
-        strength_step = (100/nb_attributes)
-
         attributes.inject(0) do |total, attribute|
           if read_attribute(attribute).present?
             self.class.strength_presents << attribute
@@ -68,6 +58,18 @@ module ModelStrength
       end
 
       protected
+
+      def attributes
+        @attributes ||= if self.class.strength_exclude
+                          self.attributes.except(*(self.class.strength_attributes | default_exclude)).keys
+                        else
+                          self.class.strength_attributes
+                        end
+      end
+
+      def strength_step
+        100 / attributes.size
+      end
 
       def store_score
         write_attribute(self.class.strength_key, current_score)
