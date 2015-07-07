@@ -11,8 +11,8 @@ module ModelStrength
         cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key, :strength_presents, :strength_missings
 
         # Active Record Callbacks
-        before_create :compute_score
-        before_update :compute_score
+        before_create :store_score
+        before_update :store_score
 
         # Setting given parameters
         self.strength_attributes = attributes.map { |attr_key| attr_key.to_s }
@@ -32,7 +32,7 @@ module ModelStrength
 
         define_method("#{key}") do
           if self.changed?
-            compute_score
+            current_score
           else
             read_attribute(key)
           end
@@ -42,7 +42,7 @@ module ModelStrength
 
     module LocalInstanceMethods
 
-      def compute_score
+      def current_score
         if self.class.strength_exclude
           attributes = self.attributes.except(*(self.class.strength_attributes | default_exclude)).keys
         else
@@ -52,7 +52,7 @@ module ModelStrength
         nb_attributes = attributes.size
         strength_step = (100/nb_attributes)
 
-        value = attributes.inject(0) do |total, attribute|
+        attributes.inject(0) do |total, attribute|
           if read_attribute(attribute).present?
             self.class.strength_presents << attribute
             total + strength_step
@@ -61,8 +61,6 @@ module ModelStrength
             total
           end
         end
-
-        write_attribute(self.class.strength_key, value)
       end
 
       def status
@@ -70,6 +68,10 @@ module ModelStrength
       end
 
       protected
+
+      def store_score
+        write_attribute(self.class.strength_key, current_score)
+      end
 
       def default_exclude
         %w(id created_at updated_at) << self.class.strength_key.to_s
