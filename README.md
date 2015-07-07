@@ -77,3 +77,9 @@ rake 'model_strength:compute_scores['products']'
 ```
 
 Where `products` is the table name for the `Product` model.
+
+
+## TODO
+
+- Make some tests
+- Handle a block for score or custom `present?` test
