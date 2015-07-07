@@ -5,8 +5,10 @@ module ModelStrength
     included do
     end
 
+    STRENGTH_DEFAULT_KEY = :score.freeze
+
     module ClassMethods
-      def acts_as_strength(*attributes, key: :score, exclude: false, statuses: { 0..30 => :ultra_low, 30..50 => :low, 50..70 => :medium, 70..99 => :high, 100 => :complete })
+      def acts_as_strength(*attributes, key: STRENGTH_DEFAULT_KEY, exclude: false, statuses: { 0..30 => :ultra_low, 30..50 => :low, 50..70 => :medium, 70..99 => :high, 100 => :complete })
         # Class and Instance accessors
         cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key, :strength_presents, :strength_missings
 
@@ -38,6 +40,11 @@ module ModelStrength
 
         # Including local instance methods
         include ModelStrength::ActsAsStrength::LocalInstanceMethods
+      end
+
+      # Average helper
+      def strength_average(key = STRENGTH_DEFAULT_KEY)
+        self.average(key).to_i
       end
     end
 
