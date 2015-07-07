@@ -29,6 +29,14 @@ module ModelStrength
 
         # Adding dynamic method to check key existence
         define_method("#{key}?") { read_attribute(key).present? }
+
+        define_method("#{key}") do
+          if self.changed?
+            compute_score
+          else
+            read_attribute(key)
+          end
+        end
       end
     end
 
