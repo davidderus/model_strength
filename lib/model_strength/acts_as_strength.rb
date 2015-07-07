@@ -6,14 +6,14 @@ module ModelStrength
     end
 
     module ClassMethods
-      def acts_as_strength(*attributes, weights: { 0 => :empty, 30 => :low, 50 => :medium, 70 => :high, 100 => :complete })
-        cattr_accessor :strength_attributes, :strength_step, :strength_weights
+      def acts_as_strength(*attributes, statuses: { 0..30 => :ultra_low, 30..50 => :low, 50..70 => :medium, 70..99 => :high, 100 => :complete })
+        cattr_accessor :strength_attributes, :strength_step, :strength_statuses
 
         before_create :compute_score
         before_update :compute_score
 
         self.strength_attributes = attributes
-        self.strength_weights = weights
+        self.strength_statuses = statuses
         nb_attributes = attributes.size
         self.strength_step = (100/nb_attributes)
 
@@ -31,8 +31,8 @@ module ModelStrength
         write_attribute(:score, value)
       end
 
-      def weight
-        self.class.strength_weights.select{ |score, value| score <= self.score }.values.last
+      def status
+        self.class.strength_statuses.select{ |score, value| score === self.score }.values.last
       end
     end
   end
