@@ -93,3 +93,4 @@ Where `products` is the table name for the `Product` model.
 
 - Make some tests
 - Handle a block for score or custom `present?` test
+- Getting present and blank attributes in a hash
