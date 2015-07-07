@@ -8,7 +8,7 @@ module ModelStrength
     module ClassMethods
       def acts_as_strength(*attributes, key: :score, exclude: false, statuses: { 0..30 => :ultra_low, 30..50 => :low, 50..70 => :medium, 70..99 => :high, 100 => :complete })
         # Class and Instance accessors
-        cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key
+        cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key, :strength_presents, :strength_missings
 
         # Active Record Callbacks
         before_create :compute_score
@@ -19,6 +19,10 @@ module ModelStrength
         self.strength_statuses = statuses
         self.strength_exclude = exclude
         self.strength_key = key
+
+        # Arrays accessors
+        self.strength_presents = []
+        self.strength_missings = []
 
         # Including local instance methods
         include ModelStrength::ActsAsStrength::LocalInstanceMethods
@@ -41,7 +45,13 @@ module ModelStrength
         strength_step = (100/nb_attributes)
 
         value = attributes.inject(0) do |total, attribute|
-          read_attribute(attribute).present? ? (total + strength_step) : total
+          if read_attribute(attribute).present?
+            self.class.strength_presents << attribute
+            total + strength_step
+          else
+            self.class.strength_missings << attribute
+            total
+          end
         end
 
         write_attribute(self.class.strength_key, value)
