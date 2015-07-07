@@ -55,12 +55,22 @@ Useful with a model with numerous attributes.
 
 ```
 class Product < ActiveRecord::Base
-  acts_as_strength :description, key: :toto
+  acts_as_strength :description, key: :strength
 end
 ```
 
-By doing so, score will be stored in a `toto` column. A `toto?` helper will be available.
-**Be careful not to forget to add `toto` column to your database!**
+By doing so, score will be stored in a `strength` column. A `strength?` helper will be available.
+**Be careful not to forget to add `strength` column to your database!**
+
+#### - Model score average
+
+```
+# With default key (:score)
+Product.strength_average
+
+# With custom key (:strength)
+Product.strength_average(:strength)
+```
 
 ## Tools
 
