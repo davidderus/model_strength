@@ -3,7 +3,7 @@
 Evaluate completeness by adding a score to your model, as Linkedin do with its Profile Strength.
 
 
-### Usage
+## Usages
 
 1. First
 
@@ -49,3 +49,19 @@ This mode will take all Product attributes except 'description' in order to comp
 Useful with a model with numerous attributes.
 
 **Note that model_strength exclude by default the following keys: 'id', 'created_at', 'updated_at', 'score'**
+
+## Tools
+
+### Rake tasks
+
+#### For computing score in each entries of a model
+
+```
+# Bash
+rake model_strength:compute_scores['products']
+
+# Zsh
+rake 'model_strength:compute_scores['products']'
+```
+
+Where `products` is the table name for the `Product` model.
