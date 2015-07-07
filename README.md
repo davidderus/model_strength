@@ -50,6 +50,18 @@ Useful with a model with numerous attributes.
 
 **Note that model_strength exclude by default the following keys: 'id', 'created_at', 'updated_at', 'score'**
 
+
+#### - Custom key for score
+
+```
+class Product < ActiveRecord::Base
+  acts_as_strength :description, key: :toto
+end
+```
+
+By doing so, score will be stored in a `toto` column. A `toto?` helper will be available.
+**Be careful not to forget to add `toto` column to your database!**
+
 ## Tools
 
 ### Rake tasks
