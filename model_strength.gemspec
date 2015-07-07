@@ -5,13 +5,13 @@ require "model_strength/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "model_strength"
+  s.name        = "ModelStrength"
   s.version     = ModelStrength::VERSION
   s.authors     = ["David Dérus"]
   s.email       = ["david.derus@kasual.biz"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ModelStrength."
-  s.description = "TODO: Description of ModelStrength."
+  s.homepage    = "http://gitlab.kasual.biz/dderus/model_strength"
+  s.summary     = "Add strength to your model, in order to evaluate completeness."
+  s.description = "Evaluate completeness by adding a score to your model, as Linkedin do with its Profile Strength."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
