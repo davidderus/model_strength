@@ -41,8 +41,15 @@ module ModelStrength
     end
 
     module LocalInstanceMethods
+
+      def status
+        self.class.strength_statuses.select{ |score, value| score === read_attribute(self.class.strength_key) }.values.last
+      end
+
+      protected
+
       def current_score
-        attributes.inject(0) do |total, attribute|
+        filtered_attributes.inject(0) do |total, attribute|
           if read_attribute(attribute).present?
             self.class.strength_presents << attribute
             total + strength_step
@@ -53,29 +60,23 @@ module ModelStrength
         end
       end
 
-      def status
-        self.class.strength_statuses.select{ |score, value| score === read_attribute(self.class.strength_key) }.values.last
-      end
-
-      protected
-
-      def attributes
-        @attributes ||= if self.class.strength_exclude
-                          self.attributes.except(*(self.class.strength_attributes | default_exclude)).keys
-                        else
-                          self.class.strength_attributes
-                        end
+      def filtered_attributes
+        @filtered_attributes ||= if self.class.strength_exclude
+                                   self.attributes.except(*(self.class.strength_attributes | excluded_keys)).keys
+                                 else
+                                   self.class.strength_attributes
+                                 end
       end
 
       def strength_step
-        100 / attributes.size
+        100 / filtered_attributes.size
       end
 
       def store_score
         write_attribute(self.class.strength_key, current_score)
       end
 
-      def default_exclude
+      def excluded_keys
         %w(id created_at updated_at) << self.class.strength_key.to_s
       end
     end
