@@ -1,11 +1,15 @@
-= ModelStrength
+# ModelStrength
 
 Evaluate completeness by adding a score to your model, as Linkedin do with its Profile Strength.
 
 
-=== Usage
+### Usage
 
-===== Acting as Strength
+##### First
+
+``rails generate migration AddScoreToProduct score:integer``
+
+##### Acting as Strength
 
 ```
 class Product < ActiveRecord::Base
@@ -13,7 +17,7 @@ class Product < ActiveRecord::Base
 end
 ```
 
-===== Getting score and status of an entity
+##### Getting score and status of an entity
 
 ```
 p = Product.find(2)
@@ -21,7 +25,7 @@ p.score # 50
 p.status # :medium
 ```
 
-===== Custom statuses
+##### Custom statuses
 
 ```
 class Product < ActiveRecord::Base
