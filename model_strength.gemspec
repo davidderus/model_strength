@@ -5,7 +5,7 @@ require "model_strength/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "ModelStrength"
+  s.name        = "model_strength"
   s.version     = ModelStrength::VERSION
   s.authors     = ["David Dérus"]
   s.email       = ["david.derus@kasual.biz"]
