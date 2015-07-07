@@ -70,6 +70,9 @@ Product.strength_average
 
 # With custom key (:strength)
 Product.strength_average(:strength)
+
+# With condition(s)
+Product.where(brand_id: 1).strength_average
 ```
 
 ## Tools
