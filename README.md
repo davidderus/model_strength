@@ -5,11 +5,11 @@ Evaluate completeness by adding a score to your model, as Linkedin do with its P
 
 ### Usage
 
-##### First
+1. First
 
 ``rails generate migration AddScoreToProduct score:integer``
 
-##### Acting as Strength
+2. Acting as Strength
 
 ```
 class Product < ActiveRecord::Base
@@ -17,7 +17,7 @@ class Product < ActiveRecord::Base
 end
 ```
 
-##### Getting score and status of an entity
+3. Getting score and status of an entity
 
 ```
 p = Product.find(2)
@@ -25,7 +25,9 @@ p.score # 50
 p.status # :medium
 ```
 
-##### Custom statuses
+### Other possibilities
+
+- Custom statuses
 
 ```
 class Product < ActiveRecord::Base
