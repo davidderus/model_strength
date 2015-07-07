@@ -7,13 +7,13 @@ Evaluate completeness by adding a score to your model, as Linkedin do with its P
 
 ### 1. First things first!
 
-```
+```shell
 rails generate migration AddScoreToProduct score:integer
 ```
 
 ### 2. Acting as Strength
 
-```
+```ruby
 class Product < ActiveRecord::Base
   acts_as_strength :name, :description
 end
@@ -31,7 +31,7 @@ p.status # :medium
 
 #### Custom statuses
 
-```
+```ruby
 class Product < ActiveRecord::Base
   acts_as_strength :name, :description, statuses: { 0..30 => :humf, 30..50 => :you_can_do_it, 50..70 => :keep_going, 70..99 => :thats_it, 100 => :well_done }
 end
@@ -39,7 +39,7 @@ end
 
 #### I18n
 
-```
+```ruby
 # In en.yml
 en:
   front:
@@ -56,7 +56,7 @@ puts "front.product.statuses.#{p.status}" # Intermediate
 
 #### Exclude mode
 
-```
+```ruby
 class Product < ActiveRecord::Base
   acts_as_strength :description, exclude: true
 end
@@ -70,7 +70,7 @@ Useful with a model with numerous attributes.
 
 #### Custom key for score
 
-```
+```ruby
 class Product < ActiveRecord::Base
   acts_as_strength :description, key: :strength
 end
@@ -81,7 +81,7 @@ By doing so, score will be stored in a `strength` column. A `strength?` helper w
 
 #### Model score average
 
-```
+```ruby
 # With default key (:score)
 Product.strength_average
 
@@ -96,7 +96,7 @@ Product.where(brand_id: 1).strength_average
 
 ### For computing score in each entries of a model
 
-```
+```shell
 # Bash
 rake model_strength:compute_scores[products]
 
