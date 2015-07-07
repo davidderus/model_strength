@@ -24,12 +24,10 @@ module ModelStrength
         self.strength_presents = []
         self.strength_missings = []
 
-        # Including local instance methods
-        include ModelStrength::ActsAsStrength::LocalInstanceMethods
-
         # Adding dynamic method to check key existence
         define_method("#{key}?") { read_attribute(key).present? }
 
+        # Adding override for getter method
         define_method("#{key}") do
           if self.changed?
             current_score
@@ -37,11 +35,13 @@ module ModelStrength
             read_attribute(key)
           end
         end
+
+        # Including local instance methods
+        include ModelStrength::ActsAsStrength::LocalInstanceMethods
       end
     end
 
     module LocalInstanceMethods
-
       def status
         self.class.strength_statuses.select{ |score, value| score === read_attribute(self.class.strength_key) }.values.last
       end
