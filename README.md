@@ -75,18 +75,16 @@ Product.strength_average(:strength)
 Product.where(brand_id: 1).strength_average
 ```
 
-## Tools
+## Rake tasks
 
-### Rake tasks
-
-#### For computing score in each entries of a model
+### For computing score in each entries of a model
 
 ```
 # Bash
-rake model_strength:compute_scores['products']
+rake model_strength:compute_scores[products]
 
 # Zsh
-rake 'model_strength:compute_scores['products']'
+rake 'model_strength:compute_scores[products]'
 ```
 
 Where `products` is the table name for the `Product` model.
