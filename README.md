@@ -29,7 +29,7 @@ p.status # :medium
 
 ### Other possibilities
 
-#### - Custom statuses
+#### Custom statuses
 
 ```
 class Product < ActiveRecord::Base
@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
 end
 ```
 
-#### - Exclude mode
+#### Exclude mode
 
 ```
 class Product < ActiveRecord::Base
@@ -51,7 +51,7 @@ Useful with a model with numerous attributes.
 **Note that model_strength exclude by default the following keys: 'id', 'created_at', 'updated_at', 'score'**
 
 
-#### - Custom key for score
+#### Custom key for score
 
 ```
 class Product < ActiveRecord::Base
@@ -62,7 +62,7 @@ end
 By doing so, score will be stored in a `strength` column. A `strength?` helper will be available.
 **Be careful not to forget to add `strength` column to your database!**
 
-#### - Model score average
+#### Model score average
 
 ```
 # With default key (:score)
