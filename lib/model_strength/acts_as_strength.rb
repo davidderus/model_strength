@@ -54,7 +54,7 @@ module ModelStrength
       protected
 
       def default_exclude
-        ['id', 'created_at', 'updated_at'] << self.class.strength_key.to_s
+        %w(id created_at updated_at) << self.class.strength_key.to_s
       end
     end
   end
