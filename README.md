@@ -37,6 +37,23 @@ class Product < ActiveRecord::Base
 end
 ```
 
+#### I18n
+
+```
+# In en.yml
+en:
+  front:
+    product:
+      statuses:
+        medium: 'Intermediate'
+
+# In console
+p = Product.find(1)
+p.status # :medium
+
+puts "front.product.statuses.#{p.status}" # Intermediate
+```
+
 #### Exclude mode
 
 ```
