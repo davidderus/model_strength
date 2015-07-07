@@ -5,7 +5,7 @@ Evaluate completeness by adding a score to your model, as Linkedin do with its P
 
 ## Usages
 
-### 1. First
+### 1. First things first!
 
 ```
 rails generate migration AddScoreToProduct score:integer
