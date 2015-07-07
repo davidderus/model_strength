@@ -66,7 +66,7 @@ module ModelStrength
       end
 
       def strength_step
-        @strength_step ||= (100 / filtered_attributes.size)
+        @strength_step ||= (100.0 / filtered_attributes.size)
       end
 
       def store_score
