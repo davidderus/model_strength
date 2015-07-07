@@ -21,7 +21,7 @@ end
 
 ### 3. Getting score and status of an entity
 
-```
+```ruby
 p = Product.find(2)
 p.score # 50
 p.status # :medium
