@@ -10,7 +10,7 @@ module ModelStrength
     module ClassMethods
       def acts_as_strength(*attributes, key: STRENGTH_DEFAULT_KEY, exclude: false, statuses: { 0..30 => :ultra_low, 30..50 => :low, 50..70 => :medium, 70..99 => :high, 100 => :complete })
         # Class and Instance accessors
-        cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key, :strength_presents, :strength_missings
+        cattr_accessor :strength_attributes, :strength_statuses, :strength_exclude, :strength_key
 
         # Active Record Callbacks
         before_create :store_score
@@ -21,10 +21,6 @@ module ModelStrength
         self.strength_statuses = statuses
         self.strength_exclude = exclude
         self.strength_key = key
-
-        # Arrays accessors
-        self.strength_presents = []
-        self.strength_missings = []
 
         # Adding dynamic method to check key existence
         define_method("#{key}?") { read_attribute(key).present? }
@@ -50,20 +46,14 @@ module ModelStrength
 
     module LocalInstanceMethods
       def status
-        self.class.strength_statuses.select{ |score, value| score === read_attribute(self.class.strength_key) }.values.last
+        self.class.strength_statuses.select{ |score, value| score === send(self.class.strength_key) }.values.last
       end
 
       protected
 
       def current_score
         filtered_attributes.inject(0) do |total, attribute|
-          if read_attribute(attribute).present?
-            self.class.strength_presents << attribute
-            total + strength_step
-          else
-            self.class.strength_missings << attribute
-            total
-          end
+          read_attribute(attribute).present? ? (total + strength_step) : total
         end
       end
 
