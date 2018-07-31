@@ -2,6 +2,7 @@
 
 Evaluate completeness by adding a score to your model, as Linkedin do with its Profile Strength.
 
+⚠️ **This gem is out-of-date and contains several security vulnerabilities in its dependencies.** ⚠️
 
 ## Usages
 
